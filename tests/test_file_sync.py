@@ -30,3 +30,10 @@ class TestFileSync(unittest.TestCase):
             target_file_contents = target_file.read()
             self.assertEqual(file_contents, target_file_contents)
 
+    def test_delete_one_file(self):
+        file_name = "file_1.txt"
+        with open(f"{self.target_dir_name}/{file_name}", "w") as target_file:
+            target_file.write("whatever")
+
+        file_sync(source_dir=self.source_dir_name, target_dir=self.target_dir_name)
+        self.assertFalse(os.path.exists(os.path.join(self.target_dir_name, file_name)))
